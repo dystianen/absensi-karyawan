@@ -69,7 +69,7 @@
                 navigator.geolocation.getCurrentPosition(function(position) {
                     const lat = position.coords.latitude;
                     const long = position.coords.longitude;
-                    const latlong = position.coords.latitude.toString() + ',' + position.coords.longitude.toString()
+                    const latlong = lat.toString() + ',' + long.toString()
                     console.log({latlong})
 
                     if ('<?= $qrToday ?>' === content && latlong == '-6.2980096,106.921984') {
