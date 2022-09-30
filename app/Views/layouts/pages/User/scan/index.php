@@ -65,39 +65,28 @@
             alert('No cameras found.');
         }
         scanner.addListener('scan', function(content) {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    const lat = position.coords.latitude;
-                    const long = position.coords.longitude;
-                    const latlong = lat.toString() + ',' + long.toString()
-                    console.log({latlong})
-
-                    if ('<?= $qrToday ?>' === content && latlong == '-6.2980096,106.921984') {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Success!',
-                            text: 'Scan Successfully!',
-                            showConfirmButton: false,
-                            timer: 3000,
-                            heightAuto: false,
-                        }).then(() => {
-                            $(document).ready(function() {
-                                $("#myForm").submit();
-                            });
-                        })
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error!',
-                            text: 'You must be in the office area!',
-                            showConfirmButton: false,
-                            timer: 3000,
-                            heightAuto: false,
-                        })
-                    }
-                });
+            if ('<?= $qrToday ?>' === content) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: 'Scan Successfully!',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    heightAuto: false,
+                }).then(() => {
+                    $(document).ready(function() {
+                        $("#myForm").submit();
+                    });
+                })
             } else {
-                alert('Geolocation is not supported by this browser!')
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: 'You must be in the office area!',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    heightAuto: false,
+                })
             }
         }).catch(function(e) {
             alert(e);

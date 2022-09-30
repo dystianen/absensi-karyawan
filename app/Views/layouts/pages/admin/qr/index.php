@@ -77,25 +77,23 @@
         </div>
 
         <!-- Modal Generate QR CODE -->
-        <?php foreach ($qr as $q) : ?>
-            <div class="modal fade" id="generateModal" data-bs-backdrop="static" tabindex="-1">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-body text-center">
-                            <h3>Are you sure</h3>
-                            Do you want to make a QR Code?
-                            </br>
-                            <div class="pt-3">
-                                <button type="button" class="btn btn-secondary m-2" data-bs-dismiss="modal">No</button>
-                                <form class="d-inline" method="post" action="<?php echo base_url(); ?>/admin/qr/save">
-                                    <button type="submit" class="btn btn-danger m-2">Yes</button>
-                                </form>
-                            </div>
+        <div class="modal fade" id="generateModal" data-bs-backdrop="static" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body text-center">
+                        <h3>Are you sure</h3>
+                        Do you want to make a QR Code?
+                        </br>
+                        <div class="pt-3">
+                            <button type="button" class="btn btn-secondary m-2" data-bs-dismiss="modal">No</button>
+                            <form class="d-inline" method="post" action="<?php echo base_url(); ?>/admin/qr/save">
+                                <button type="submit" class="btn btn-danger m-2">Yes</button>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
-        <?php endforeach; ?>
+        </div>
 
         <!-- Modal Delete -->
         <?php foreach ($qr as $q) : ?>
@@ -164,6 +162,7 @@
         initCountry().then(result => console.log(JSON.stringify(result))).catch(e => console.log(e))
 
         let isQrToday = '<?php echo $qrCreated; ?>';
+        console.log({isQrToday})
 
         $(document).ready(function () {
             $('#table').DataTable({
@@ -188,9 +187,7 @@
                     {
                         text: 'Generate QR',
                         action: function (e, node, config) {
-                            if (!isQrToday) {
-                                $('#generateModal').modal('show')
-                            } else {
+                            if (isQrToday) {
                                 Swal.fire({
                                     icon: 'info',
                                     title: 'FYI!',
@@ -199,6 +196,8 @@
                                     showCloseButton: true,
                                     heightAuto: false,
                                 })
+                            } else {
+                                $('#generateModal').modal('show')
                             }
                         }
                     }

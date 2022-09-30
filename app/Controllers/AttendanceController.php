@@ -45,7 +45,7 @@ class AttendanceController extends BaseController
         $today = date('Y-m-d');
         $qrToday =  $this->qrModel->where('DATE(created_at)', $today)->first();
         $data = [
-            'qr' => $qrToday
+            'qrToday' => $qrToday ? $qrToday['file'] : null
         ];
 
         echo view('layouts/pages/User/qrcode/index', $data);
